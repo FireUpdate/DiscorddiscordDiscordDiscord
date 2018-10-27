@@ -416,72 +416,84 @@ client.on('message', message => {
   }
   })
 
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-    console.log(`in ${client.guilds.size} servers `)
-    console.log(`[GamingBot] ${client.users.size}`)
-    client.user.setStatus("Idle")   
-});
+////////////////short
+client.on('message', message => { 
+	var prefix = "g!";
+ let args = message.content.split(' ').slice(1);
+    if(message.content.startsWith(prefix + 'short')) {
+    if(!message.channel.guild) return;  
 
-////
-//الكود حق بوت Gaming BOT
-let points = JSON.parse(fs.readFileSync('./points.json', 'utf8')); // يقوم بقراءه ملف النقاط , والمسار حق النقاطس العام لجميع الأوامر
-client.on('message', message => {
-if (!points[message.author.id]) points[message.author.id] = {
-    points: 0,
-  };
-if (message.content.startsWith(prefix + 'فكك')) {
-    if(!message.channel.guild) return message.reply('**هذا الأمر للسيرفرات فقط**').then(m => m.delete(3000));
-
-const type = require('./fkk.json');
-const item = type[Math.floor(Math.random() * type.length)];
-const filter = response => {
-    return item.answers.some(answer => answer.toLowerCase() === response.content.toLowerCase());
-};
-message.channel.send('**لديك 15 ثانيه لتفكيك الكلمه**').then(msg => {
-let embed = new Discord.RichEmbed()
-.setColor("04791c")
- .setImage(`${item.type}`)
-msg.channel.send(embed).then(() => {
-        message.channel.awaitMessages(filter, { maxMatches: 1, time: 15000, errors: ['time'] })
-        .then((collected) => {
-         const sh = new Discord.RichEmbed()
-.setColor("04791c")
-.setDescription('**? |Good Job +1P**')
-.addField('Type G.mypoints', 'To Show ur Points' , true)
-.setFooter(message.author.username, message.author.avatarURL)
-message.channel.sendEmbed(sh);
-        let won = collected.first().author;
-                points[won.id].points++;
-        })
-           .catch(collected => { // في حال لم يقم أحد بالإجابة
-            message.channel.send(`?? |**Time Is End**`);
-           })
-          fs.writeFile("./points.json", JSON.stringify(points), (err) => {
-    if (err) console.error(err)
-          })
-        })
-    })
+        googl.setKey('AIzaSyC2Z2mZ_nZTcSvh3QvIyrmOIFP6Ra6co6w');
+        googl.getKey();
+        googl.shorten(args.join(' ')).then(shorturl => {
+            message.channel.send(''+shorturl)
+        }).catch(e=>{
+            console.log(e.message);
+            message.channel.send('Error!');
+        });
 }
-})
+});
+///////////////////////////////////////////tag
 client.on('message', message => {
-if (message.content.startsWith(prefix + 'mypoints')) {
-	if(!message.channel.guild) return message.reply('**هذا الأمر للسيرفرات فقط**').then(m => m.delete(3000));
-	let userData = points[message.author.id];
-	let embed = new Discord.RichEmbed()
-    .setAuthor(`${message.author.tag}`, message.author.avatarURL)
-	.setColor('#000000')
-	.setDescription(`نقاطك: \`${userData.points}\``)
-	message.channel.sendEmbed(embed)
-  }
-  fs.writeFile("./points.json", JSON.stringify(points), (err) => {
-    if (err) console.error(err)
-  })
+	var prefix = "g!";
+if (message.content.startsWith(prefix + 'tag')) {
+    let args = message.content.split(" ").slice(1);
+if(!args[0]) return message.reply('مرجو كتابة نص الدي تريد');  
+
+    figlet(args.join(" "), (err, data) => {
+              message.channel.send("```" + data + "```")
+           })
+}
 });
 
 
 
+///////////////////////////////Trans 
+const Langs = ['afrikaans', 'albanian', 'amharic', 'arabic', 'armenian', 'azerbaijani', 'bangla', 'basque', 'belarusian', 'bengali', 'bosnian', 'bulgarian', 'burmese', 'catalan', 'cebuano', 'chichewa', 'chinese simplified', 'chinese traditional', 'corsican', 'croatian', 'czech', 'danish', 'dutch', 'english', 'esperanto', 'estonian', 'filipino', 'finnish', 'french', 'frisian', 'galician', 'georgian', 'german', 'greek', 'gujarati', 'haitian creole', 'hausa', 'hawaiian', 'hebrew', 'hindi', 'hmong', 'hungarian', 'icelandic', 'igbo', 'indonesian', 'irish', 'italian', 'japanese', 'javanese', 'kannada', 'kazakh', 'khmer', 'korean', 'kurdish (kurmanji)', 'kyrgyz', 'lao', 'latin', 'latvian', 'lithuanian', 'luxembourgish', 'macedonian', 'malagasy', 'malay', 'malayalam', 'maltese', 'maori', 'marathi', 'mongolian', 'myanmar (burmese)', 'nepali', 'norwegian', 'nyanja', 'pashto', 'persian', 'polish', 'portugese', 'punjabi', 'romanian', 'russian', 'samoan', 'scottish gaelic', 'serbian', 'sesotho', 'shona', 'sindhi', 'sinhala', 'slovak', 'slovenian', 'somali', 'spanish', 'sundanese', 'swahili', 'swedish', 'tajik', 'tamil', 'telugu', 'thai', 'turkish', 'ukrainian', 'urdu', 'uzbek', 'vietnamese', 'welsh', 'xhosa', 'yiddish', 'yoruba', 'zulu'];
 
+client.on('message', message => {
+	var prefix = "-";
+if (message.content.startsWith(prefix + 'trans')) {
+    let args = message.content.split(" ").slice(1);
+    if (!args[0]) {
+    
+        const embed = new Discord.RichEmbed()
+            .setColor("FFFFFF")
+            .setDescription("**ترجمة الكتابة.**\استعمل: `-translate <الكلمة لتبي> <االغة>`");
+
+        return message.channel.send(embed);
+
+    } else {
+
+        if (args.length === undefined) {
+
+            return message.channel.send("**ترجمة الكتابة.**\استعمل: `-translate <الكلمة لتبي> <االغة>`");
+
+        } else {
+
+            let transArg = args[0].toLowerCase();
+
+            args = args.join(' ').slice(1)
+            let translation;
+
+            if (!Langs.includes(transArg)) return message.channel.send(`**Language not found.**`);
+            args = args.slice(transArg.length);
+
+            translate(args, {
+                to: transArg
+            }).then(res => {
+
+                const embed = new Discord.RichEmbed()
+                    .setAuthor("Translator", client.user.displayAvatarURL)
+                    .addField(`Input`, `\`\`\`${args}\`\`\``)
+                    .setColor("#42f4c8")
+                    .addField(`Output`, `\`\`\`${res.text}\`\`\``);
+                return message.channel.send(embed);
+            });
+        }
+    }
+}
+});
 
 
 
