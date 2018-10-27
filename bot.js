@@ -32,28 +32,72 @@ client.on('ready', () => {
 
 
 
-const bannedwords = [//By:Mahmoud-QuaStyle
-  "#credit",//Gamingbot
-  "#profile",//Gamingbot
-//Gamingbot
-  "#rep",//Gamingbot
-  "#top",//Gamingbot
-  "%level",//Gamingbot
-  "%تقديم",//Gamingbot
-  "-play",//Gamingbot
-  "-stop",//Gamingbot
-  "-p",//Gamingbot
-  "-s",//Gamingbot
-  "!invites",//Gamingbot
-  "!top",//Gamingbot
-  "G.play",//Gamingbot
-  "G.stop",  //Gamingbot
-  "G.skip",  //Gamingbot
-  "-skip",  //Gamingbot
-  "g!help",//Gamingbot
-  "g!profile"  //Gamingbot
-  //Gamingbot
-//Gamingbot
+client.on("message", message => {
+    if (message.content.startsWith("g!obc")) {
+                 if (!message.member.hasPermission("ADMINISTRATOR"))  return;
+  let args = message.content.split(" ").slice(1);
+  var argresult = args.join(' ');
+  message.guild.members.filter(m => m.presence.status !== 'all').forEach(m => {
+  m.send(`${argresult}\n ${m}`);
+  })
+  message.channel.send(`\`${message.guild.members.filter( m => m.presence.status !== 'all').size}\`:mailbox:  عدد المستلمين `);
+  message.delete();
+  };
+  });
+client.on('ready',  () => {
+    console.log('تم تشغيل :Broadcast  ');
+    console.log(`Logged in as * [ " ${client.user.username} " ] servers! [ " ${client.guilds.size} " ]`);
+    console.log(`Logged in as * [ " ${client.user.username} " ] Users! [ " ${client.users.size} " ]`);
+    console.log(`Logged in as * [ " ${client.user.username} " ] channels! [ " ${client.channels.size} " ]`);
+  });
+
+
+
+
+
+ client.on('message', message => {
+    if(!message.channel.guild) return;
+let args = message.content.split(' ').slice(1).join(' ');
+if (message.content.startsWith('g!adminbc')){
+if(!message.author.id === '411137717884289024') return;
+message.channel.sendMessage('جار ارسال الرسالة |:white_check_mark:')
+client.users.forEach(m =>{
+m.sendMessage(args)
+})
+}
+});
+
+
+
+
+
+
+
+
+
+
+
+const bannedwords = [//Alpha Codes
+  "#credit",//Alpha Codes
+  "#profile",//Alpha Codes
+//Alpha Codes
+  "#rep",//Alpha Codes
+  "#top",//Alpha Codes
+  "%level",//Alpha Codes
+  "%تقديم",//Alpha Codes
+  "-play",//Alpha Codes
+  "-stop",//Alpha Codes
+  "-p",//Alpha Codes
+  "-s",//Alpha Codes
+  "!invites",//Alpha Codes
+  "!top",//Alpha Codes
+  "G.play",//Alpha Codes
+  "G.stop",
+  "G.skip",
+  "-skip",
+  "g!help"
+//Alpha Codes
+//Alpha Codes
 
 ]
 client.on('message', message => {
@@ -65,7 +109,8 @@ client.on('message', message => {
   if(message.member.roles.has(warn)) return;
   if(!message.member.roles.has(warn.id)) {
   message.member.addRole(warn)
-  message.reply("**` ➫bot»commends▃-▄-▅-▆-▇-▉-▊-▋-█ تم اعطائك تحذير لاستخدام اوامر البوت فى الشات العام` 😠`**")
+  message.reply("**` ➫bot»commends▃-▄-▅-▆-▇-▉-▊-▋-█ sتم اعطائك تحذير لاستخدام اوامر البوت فى الشات العام` 😠**")
+  }
   if(message.member.roles.has(warn.id)) {
       message.member.addRole(Muted)
       message.member.removeRole(warn)
@@ -73,6 +118,19 @@ client.on('message', message => {
   }
   }
   })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
