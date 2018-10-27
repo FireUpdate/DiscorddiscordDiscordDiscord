@@ -690,7 +690,23 @@ client.on('voiceStateUpdate', (u, member) => {
 
 
 
+////////////
+client.on("message", msg => {
+var prefix = "g!";//البرفكس
+let args = msg.content.split(" ").slice(2);
+let men = msg.mentions.users.first();
+var all = msg.content.split(" ").slice(1) - msg.mentions.users.first();
+if(msg.content.startsWith(prefix + "say-embed")) {
+msg.channel.send(`تم الارساله الى ${men}`)
+let embed = new Discord.RichEmbed()
+.setTitle("Message!!!!")
+.addField("Sender", msg.author.tag, true)
+.addField("Guild", msg.guild.name, true)
+.addField(`Message`,`${args}`,  true)
+men.sendMessage(embed);
 
+}
+});
 
 
 
