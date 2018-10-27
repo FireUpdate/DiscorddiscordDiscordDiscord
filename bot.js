@@ -503,22 +503,44 @@ client.on('message' , async (message) => {
 });
 
 //////////////////////////////////////////
- client.on('message', message =>{
+  client.on("message", async message => {
+	   var prefix = "g!";
+    if(message.content == prefix+"فكك"){
+        if(UserBlocked.has(message.guild.id)) return message.channel.send("هناك جلسة .")
+        UserBlocked.add(message.guild.id)
+        var ask = fkk[Math.floor(Math.random() * fkk.length)];
+        let embed = new Discord.RichEmbed()
+        .setTitle('لعبة فكك')
+        .setAuthor(message.author.username, message.author.avatarURL)
+        .setColor("RANDOM")
+        .setDescription(ask.f);
+        message.channel.sendEmbed(embed).then(msg=> msg.delete(200000))
+        const msgs = await message.channel.awaitMessages(msg => msg.author.id !== client.user.id ,{maxMatches:1,time:100000});
+            UserBlocked.delete(message.guild.id)
+        msgs.forEach(result => {
+           if(result.author.id == client.user.id) return;
+           if(result.content == "فكك") return
+           if(result.content == ask.k){
 
-    if(message.content == "g!roles"){
-        var 
-        ros=message.guild.roles.size,
-        data = [['Rank', 'RoleName']]
-        for(let i =0;i<ros;i++){
-            if(message.guild.roles.array()[i].id !== message.guild.id){
-         data.push([i,`${message.guild.roles.filter(r => r.position == ros-i).map(r=>r.name)}`])
-        }}
-        let res = AsciiTable.table(data)
+             let embeds = new Discord.RichEmbed()
+             .setTitle(':white_check_mark: اجابة صحيحة')
+             .setAuthor(message.author.username, message.author.avatarURL)
+             .setColor("RANDOM")
+             .setDescription(`**${result.author.username}** الإجابة صحيحة`);
+                message.channel.sendEmbed(embeds);                return;
+           } else {
 
-        message.channel.send(`**\`\`\`xl\n${res}\`\`\`**`);
-    }
+                               var embedx = new Discord.RichEmbed()
+             .setTitle(':x:خطاء')
+             .setAuthor(message.author.username, message.author.avatarURL)
+             .setColor("RANDOM")
+             .setDescription(`**${result.author.username}** الإجابة خاطئة`);
+
+                message.channel.sendEmbed(embedx);
+           }
+     });
+  }
 });
- 
 
 
 
