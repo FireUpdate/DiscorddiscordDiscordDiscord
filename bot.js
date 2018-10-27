@@ -416,7 +416,12 @@ client.on('message', message => {
   }
   })
 
-
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`in ${client.guilds.size} servers `)
+    console.log(`[GamingBot] ${client.users.size}`)
+    client.user.setStatus("Idle")   
+});
 
 ////
 //الكود حق بوت Gaming BOT
