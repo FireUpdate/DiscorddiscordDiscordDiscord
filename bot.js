@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const tpoints = {};
 const vpoints = {};
-const googl = require('goo.gl');  
 const translate = require('google-translate-api');   
 const prefix = "g!";
 const client = new Discord.Client();
