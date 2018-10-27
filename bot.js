@@ -494,6 +494,28 @@ if (message.content.startsWith(prefix + 'trans')) {
     }
 }
 });
+////////////////
+client.on('message' , async (message) => {
+       if(message.content.startsWith(`<@${client.user.id}>`)) {
+              message.channel.startTyping()
+ let responses = [
+        'تحتاج مساعدة جرب g!help',
+        'هلا امرني',
+        'تحبني؟',
+         'طفشان عندك نكتة؟',
+         'تمنشن بوت؟',
+         'اعجبك البوت',
+         'لا تنسى تزور سيرفر السبورت',
+       'احبك ياخي'
+    ]
+    
+    // Fetch a random item from the array
+    let fetched = responses[Math.floor(Math.random() * responses.length)];
+   message.reply(fetched)
+   message.channel.stopTyping()
+       }
+  
+});
 
 
 
