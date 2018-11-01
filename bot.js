@@ -261,12 +261,8 @@ client.on("guildMemberAdd", member => {
          moment.locale('ar-ly');
          var h = member.user;
         let heroo = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setThumbnail(h.avatarURL)
         .setAuthor(h.username,h.avatarURL)
-        .addField(': Welcome')            
-         .addField(': Welcome ')      
-         .setFooter(`${h.tag}`,"https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif")
+         .addField('Hey')      
      welcomer.send({embed:heroo});          
          
       var Canvas = require('canvas')
