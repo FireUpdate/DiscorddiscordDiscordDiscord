@@ -1,13 +1,15 @@
 const Discord = require('discord.js');
-const tpoints = {};
-const vpoints = {};
-const translate = require('google-translate-api');   
-const prefix = "g!";
 const client = new Discord.Client();
+const fs = require("fs");
+const Canvas = require("canvas");
+const jimp = require("jimp");
+const moment = require('moment');
+const yt = require('ytdl-core');
+const prefix = 'g!'
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
- client.user.setActivity('g!support')
+client.user.setGame("g!help - For Help");
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
