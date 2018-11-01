@@ -261,7 +261,6 @@ client.on("guildMemberAdd", member => {
          var h = member.user;
         let heroo = new Discord.RichEmbed()
         .setAuthor(h.username,h.avatarURL)
-         .addField('Hey')      
      welcomer.send({embed:heroo});          
          
       var Canvas = require('canvas')
