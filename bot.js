@@ -326,79 +326,7 @@ const channel = sWlc[message.guild.id].channel
  
 
 
-client.on("guildMemberAdd", member => {
-      if(!sWlc[member.guild.id]) sWlc[member.guild.id] = {
-    channel: "↗wèlcòmèヅ"
-  }
-  const channel = sWlc[member.guild.id].channel
-    const sChannel = sWlc[member.guild.id].channel
-    let welcomer = member.guild.channels.find('name', sChannel);
-    let memberavatar = member.user.avatarURL
-      if (!welcomer) return;
-      if(welcomer) {
-         var h = member.user;
-        let heroo = new Discord.RichEmbed()
-        .setAuthor(h.username,h.avatarURL)
-     welcomer.send({embed:heroo});          
-         
-      var Canvas = require('canvas')
-      var jimp = require('jimp')
-      const w = ['nj.png'];
-      
-              let Image = Canvas.Image,
-                  canvas = new Canvas(557, 241),
-                  ctx = canvas.getContext('2d');
-  
-              fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
-                  if (err) return console.log(err)
-                  let BG = Canvas.Image;
-                  let ground = new Image;
-                  ground.src = Background;
-                  ctx.drawImage(ground, 0, 0, 557, 241);
-      
-      })
-      
-                      let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
-                      jimp.read(url, (err, ava) => {
-                          if (err) return console.log(err);
-                          ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
-                              if (err) return console.log(err);
-      
-                                    ctx.font = '30px Arial Bold';
-                              ctx.fontSize = '20px';
-                              ctx.fillStyle = "#FFFFFF";
-                                ctx.fillText(member.user.username, 245, 150);
-                              
-                              //NAMEً
-                              ctx.font = '30px Arial';
-                              ctx.fontSize = '28px';
-                              ctx.fillStyle = "#FFFFFF";
-      ctx.fillText(`Welcome To ${member.guild.name}`, 245, 80);
-      
-                              //AVATARً
-                              let Avatar = Canvas.Image;
-                              let ava = new Avatar;
-                              ava.src = buf;
-                              ctx.beginPath();
-                 ctx.arc(120.8, 120.5, 112.3, 0, Math.PI*2, true);
-                   ctx.closePath();
-                   
-                                 ctx.clip();
 
-                        ctx.drawImage(ava, 7, 8, 227, 225);
-                              ctx.closePath();
-
-                            
-    welcomer.sendFile(canvas.toBuffer())
-      
-      
-      
-      })
-      })
-      
-      }
-      });
-///
 
  
 
