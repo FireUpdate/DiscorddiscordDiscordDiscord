@@ -829,7 +829,118 @@ message.channel.sendFile(canvas.toBuffer())
 }
 
 })
+//////
+//╭━━━┳━━━┳━╮╭━┳━━━┳━━━╮
+//┃╭━╮┃╭━╮┃┃╰╯┃┃╭━━┫╭━╮┃
+//┃┃╱╰┫┃╱┃┃╭╮╭╮┃╰━━┫╰━━╮
+//┃┃╭━┫╰━╯┃┃┃┃┃┃╭━━┻━━╮┃
+//┃╰┻━┃╭━╮┃┃┃┃┃┃╰━━┫╰━╯┃
+//╰━━━┻╯╱╰┻╯╰╯╰┻━━━┻━━━╯
 
+
+            let points = JSON.parse(fs.readFileSync('./fkk/3wasmPTS.json', 'utf8'));
+            
+            client.on('message', message => {
+            if (!points[message.author.id]) points[message.author.id] = {
+                points: 0,
+              };
+            if (message.content.startsWith(prefix + 'لغز')) {
+                if(!message.channel.guild) return message.reply('**هذا الأمر للسيرفرات فقط**').then(m => m.delete(3000));
+            
+            const type = require('./fkk/quiz.json');
+            const item = type[Math.floor(Math.random() * type.length)];
+            const filter = response => {
+                return item.answers.some(answer => answer.toLowerCase() === response.content.toLowerCase());
+            };
+            message.channel.send('**لديك 15 ثانيه لحل هذه الغز**').then(msg => {
+            
+                        
+            msg.channel.send(`${item.type}`).then(() => {
+                    message.channel.awaitMessages(filter, { maxMatches: 1, time: 15000, errors: ['time'] })
+                    .then((collected) => {
+                    message.channel.send(`${collected.first().author} ✅ **احسنت لقد تمكنت من حل هذه الغز بسرعه**`);
+                    console.log(`[Typing] ${collected.first().author} typed the word.`);
+                        let won = collected.first().author;
+                        points[won.id].points++;
+                      })
+                      .catch(collected => {
+                        message.channel.send(`:x: **لم يتمكن احد من حل هذه الغز  في الوقت المناسب**`);
+                        console.log('[Typing] Error: No one type the word.');
+                      })
+                    })
+                })
+            }
+            });
+            
+            client.on('message', message => {
+              if (!points[message.author.id]) points[message.author.id] = {
+                points: 0,
+                };
+              if (message.content.startsWith(prefix + 'فكك')) {
+                if(!message.channel.guild) return message.reply('**هذا الأمر للسيرفرات فقط**').then(m => m.delete(3000));
+              
+              const type = require('./fkk/fkk.json');
+              const item = type[Math.floor(Math.random() * type.length)];
+              const filter = response => {
+                  return item.answers.some(answer => answer.toLowerCase() === response.content.toLowerCase());
+              };
+              message.channel.send('**لديك 15 ثانيه لتفكيك الكلمه**').then(msg => {
+              
+                    
+              msg.channel.send(`${item.type}`).then(() => {
+                      message.channel.awaitMessages(filter, { maxMatches: 1, time: 15000, errors: ['time'] })
+                      .then((collected) => {
+                  message.channel.send(`${collected.first().author} ✅ **احسنت لقد تمكنت من تفكيك الكلمه بسرعه**`);
+                  console.log(`[Typing] ${collected.first().author} typed the word.`);
+                          let won = collected.first().author;
+                          points[won.id].points++;
+                        })
+                        .catch(collected => {
+                          message.channel.send(`:x: **لم يتمكن احد من تفكيك الكلمه في الوقت المناسب**`);
+                    console.log('[Typing] Error: No one type the word.');
+                        })
+                  })
+                })
+              }
+              });
+            client.on('message', async message => {
+              var prefix = "+";     
+              var args = message.content.substring(prefix.length).split(" ");
+              if (message.content.startsWith(prefix + "wasted")) {
+            var jimp = require('jimp')
+      
+            if(message.mentions.users.size < 1) {
+                Jimp.read(message.author.avatarURL).then(function (photo) {
+                    photo.resize(512, 512).grayscale().gaussian(2)
+                    Jimp.read('./wasted.png').then(function (lenna) {
+                        photo.composite(lenna,0,0)
+                        photo.getBuffer(Jimp.MIME_PNG, function (err, image) { 
+                            message.delete();
+                            message.channel.send({files:[{attachment:image,name:"file.png"}]}) 
+                        })
+                    })
+                })
+            } else if (message.mentions.users.size > 1) {
+                message.channel.sendEmbed(new Discord.RichEmbed()
+                    .addField('Error!', `Please mention a single user!`)
+                    .setColor(0xff5454)
+                );
+                return;
+            } else {
+                let mention = message.guild.member(message.mentions.users.first());
+                Jimp.read(mention.user.avatarURL).then(function (photo) {
+                    photo.resize(512, 512).grayscale().gaussian(2)
+                    Jimp.read('./wasted.png').then(function (lenna) {
+                        photo.composite(lenna,0,0)
+                        photo.getBuffer(Jimp.MIME_PNG, function (err, image) { 
+                            message.delete();
+                            message.channel.send({files:[{attachment:image,name:"file.png"}]}) 
+                        })
+                    })
+                })
+            }
+        };
+      });
 client.login(process.env.BOT_TOKEN);
 
 
