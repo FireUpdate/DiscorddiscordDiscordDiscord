@@ -653,7 +653,7 @@ let args = message.content.split(' ').slice(1).join(' ');
            defineduser = firstMentioned;
        }
 
-       const w = ['id6.png','id2.png','id3.png','id41.png','id5.png'];
+       const w = ['id6.png','id2.png','id3.png','id41.png','id5.png','id7.png','id8.png','id9.png'];
        var Canvas = require('canvas')
 var jimp = require('jimp')
 
