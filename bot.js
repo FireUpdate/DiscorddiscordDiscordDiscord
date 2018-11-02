@@ -233,14 +233,12 @@ client.on('raw', event => {
 
 
 ///////////////////
-const sWlc = {}
-const premium = ['411137717884289024']
+let sWlc = JSON.parse(fs.readFileSync("./setWlc.json", "UTF8"))   
 client.on('message', message => {
-var prefix = "g!";
 if(message.channel.type === "dm") return;
 if(message.author.bot) return;
   if(!sWlc[message.guild.id]) sWlc[message.guild.id] = {
-    channel: "↗wèlcòmèヅ"
+    channel: "welcome"
 }
 const channel = sWlc[message.guild.id].channel
   if (message.content.startsWith(prefix + "setwelcomer")) {
@@ -250,8 +248,83 @@ const channel = sWlc[message.guild.id].channel
     sWlc[message.guild.id].channel = newChannel
     message.channel.send(`**${message.guild.name}'s channel has been changed to ${newChannel}**`);
   }
+   fs.writeFile('./setWlc.json', JSON.stringify(sWlc), (err) => {
+if (err) console.error(err);
+})
 });
- 
+client.on("guildMemberAdd", member => {
+      if(!sWlc[member.guild.id]) sWlc[member.guild.id] = {
+    channel: "welcome"
+  }
+  const channel = sWlc[member.guild.id].channel
+    const sChannel = sWlc[member.guild.id].channel
+    let welcomer = member.guild.channels.find('name', sChannel);
+    let memberavatar = member.user.avatarURL
+      if (!welcomer) return;
+      if(welcomer) {
+member.guild.fetchInvites().then(guildInvites => {
+    const ei = invites[member.guild.id];
+    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const inviter = client.users.get(invite.inviter.id);
+    const yumz = member.guild.channels.find("name", `${sChannel}`);
+     yumz.send(`<@${member.user.id}> joined by <@${inviter.id}>`);
+   //  yumz.send(`<@${member.user.id}> joined using invite code ${invite.code} from <@${inviter.id}>. Invite was used ${invite.uses} times since its creation.`);
+  }); 
+      var Canvas = require('canvas')
+      var jimp = require('jimp')
+      
+      const w = ['./w1.png'];
+      
+              let Image = Canvas.Image,
+                  canvas = new Canvas(400, 200),
+                  ctx = canvas.getContext('2d');
+  
+              fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
+                  if (err) return console.log(err)
+                  let BG = Canvas.Image;
+                  let ground = new Image;
+                  ground.src = Background;
+                  ctx.drawImage(ground, 0, 0, 400, 200);
+      
+      })
+      
+                      let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
+                      jimp.read(url, (err, ava) => {
+                          if (err) return console.log(err);
+                          ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
+                              if (err) return console.log(err);
+      
+                                    ctx.font = "bold 12px Arial";
+                              ctx.fontSize = '20px';
+                              ctx.fillStyle = "#f1f1f1";
+                                ctx.fillText(member.user.username, 200, 150);
+                              
+                              //NAMEً
+                              ctx.font = "bold 12px Arial";
+                              ctx.fontSize = '20px';
+                              ctx.fillStyle = "#f1f1f1";
+      ctx.fillText(`Welcome To Server`, 260, 125);
+      
+                              //AVATARً
+                              let Avatar = Canvas.Image;
+                              let ava = new Avatar;
+                              ava.src = buf;
+                              ctx.beginPath();
+                              ctx.arc(77, 101, 62, 0, Math.PI*2);
+                              ctx.stroke();
+                                 ctx.clip();
+                                 ctx.drawImage(ava, 13, 38, 128, 126); 
+
+                            
+    welcomer.sendFile(canvas.toBuffer())
+      
+      
+                          
+      })
+      })
+      
+      }
+      });
 
 
 
@@ -492,82 +565,6 @@ function sin_to_hex(i, phase) {
 let place = 0;
 
 //////////////////////well
-client.on("guildMemberAdd", member => {
-      if(!sWlc[member.guild.id]) sWlc[member.guild.id] = {
-    channel: "welcome"
-  }
-  const channel = sWlc[member.guild.id].channel
-    const sChannel = sWlc[member.guild.id].channel
-    let welcomer = member.guild.channels.find('name', sChannel);
-    let memberavatar = member.user.avatarURL
-      if (!welcomer) return;
-      if(welcomer) {
-         moment.locale('ar-ly');
-         var h = member.user;
-        let heroo = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setThumbnail(h.avatarURL)
-         .setFooter(`${h.tag}`,"https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif")
-     welcomer.send({embed:heroo});          
-         
-      var Canvas = require('canvas')
-      var jimp = require('jimp')
-      
-      const w = ['w.png'];
-      
-              let Image = Canvas.Image,
-                  canvas = new Canvas(557, 241),
-                  ctx = canvas.getContext('2d');
-  
-              fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
-                  if (err) return console.log(err)
-                  let BG = Canvas.Image;
-                  let ground = new Image;
-                  ground.src = Background;
-                  ctx.drawImage(ground, 0, 0, 540, 230);
-      
-      })
-      
-                      let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
-                      jimp.read(url, (err, ava) => {
-                          if (err) return console.log(err);
-                          ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
-                              if (err) return console.log(err);
-      
-                                    ctx.font = '21px kathen';
-                              ctx.fontSize = '25px';
-                              ctx.fillStyle = "#FFFFFF";
-                                ctx.fillText(member.user.username, 240, 150);
-                              
-                              //NAMEً
-                              ctx.font = '21px kathen';
-                              ctx.fontSize = '20px';
-                              ctx.fillStyle = "#FFFFFF";
-      ctx.fillText(`Welcome To ${member.guild.name}`, 240, 90);
-      
-                              //AVATARً
-                              let Avatar = Canvas.Image;
-                              let ava = new Avatar;
-                              ava.src = buf;
-                              ctx.beginPath();
-                 ctx.arc(120.8, 120.5, 112.3, 0, Math.PI*2, true);
-                   ctx.closePath();
-                   
-                                 ctx.clip();
-
-                        ctx.drawImage(ava, 7, 8, 227, 225);
-                              ctx.closePath();
-
-                            
-    welcomer.sendFile(canvas.toBuffer())
-      
-      
-      
-      })
-      })
-      
-      }
-      });
 
 
 client.login(process.env.BOT_TOKEN);
