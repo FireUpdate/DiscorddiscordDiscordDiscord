@@ -1151,9 +1151,7 @@ message.channel.stopTyping()
 });
 ////Nin
 client.on('message', message => {
-if (!points[message.author.id]) points[message.author.id] = {
-    points: 50,
-  };
+
 if (message.content.startsWith(prefix + 'ماينكرفت')) { 
     if(!message.channel.guild) return message.reply('**هذا الأمر للسيرفرات فقط**').then(m => m.delete(3000));
 
