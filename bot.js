@@ -1055,7 +1055,7 @@ if (message.content.startsWith(prefix + "profile")) {
           var client = message.author;
 
       }
-if (!profile[getvalueof.id]) profile[getvalueof.id] = {points: 0,reps: "NOT YET",credits: 1, level: 1,tite: ">title", rep: 0, lastDaily: "NOT COLLECTED"};
+if (!profile[getvalueof.id]) profile[getvalueof.id] = {points: 0,reps: "NOT YET",credits: 1, level: 1,tite: "g!title", rep: 0, lastDaily: "NOT COLLECTED"};
             let Image = Canvas.Image,
             canvas = new Canvas(300, 300),
             ctx = canvas.getContext('2d');
