@@ -148,11 +148,102 @@ if(!args[0]) return message.reply('مرجو كتابة نص الدي تريد');
 
 
 
-///////////////////////////////Trans 
-
+///////////////////////////////voiceonline
+ client.on('message',async message => {
+  if(message.content.startsWith(prefix + "voiceonline")) {
+  if(!message.guild.member(message.author).hasPermissions('MANAGE_CHANNELS')) return message.reply(':x: **ليس لديك الصلاحيات الكافية**');
+  if(!message.guild.member(client.user).hasPermissions(['MANAGE_CHANNELS','MANAGE_ROLES_OR_PERMISSIONS'])) return message.reply(':x: **ليس معي الصلاحيات الكافية**');
+  message.channel.send(':white_check_mark:| **تم عمل الروم بنجاح**');
+  message.guild.createChannel(`Voice Online : [ ${message.guild.members.filter(m => m.voiceChannel).size} ]` , 'voice').then(c => {
+    console.log(`Voice online channel setup for guild: \n ${message.guild.name}`);
+    c.overwritePermissions(message.guild.id, {
+      CONNECT: false,
+      SPEAK: false
+    });
+    setInterval(() => {
+      c.setName(`Voice Online : [ ${message.guild.members.filter(m => m.voiceChannel).size} ]`)
+    },1000);
+  });
+  }
+});
 /////////////////////////////
 
+client.on('message' , async (message) => {
+    if(message.content.startsWith("top")) {
+if(message.author.bot) return;
+if(!message.channel.guild) return message.reply(' Error : \` Guild Command \`');
+  var invites = await message.guild.fetchInvites();
+    invites = invites.array();
+    arraySort(invites, 'uses', { reverse: true });
+    let possibleInvites = ['User Invited |  Uses '];
+    invites.forEach(i => {
+        if (i.uses === 0) { 
+            return;
+        }
+      possibleInvites.push(['\n\ ' +'<@'+ i.inviter.id +'>' + '  :  ' +   i.uses]);
+      if (i.uses === 30) {//يمديك تعدل رقم وصول العدد حق الانفايت الى اأقل أو أكثر
+          message.member.addRole(message.member.guild.roles.find("name","??Special?‏‏?  ?"))//هنآ أسم ألرتبه اللي تجيهه
+.catch(RebeL =>{
+console.log('`Error`: ' + RebeL);
+});
+}
+if (i.uses === 30) {
+message.member.addRole(message.member.guild.roles.find("name","??Special?‏‏?  ?"))
+.catch(RebeL =>{
+console.log('`Error`: ' + RebeL);
+});
+}
+if (i.uses === 30) {
+message.member.addRole(message.member.guild.roles.find("name","??Special?‏‏?  ?"))
+.catch(RebeL =>{
+console.log('`Error`: ' + RebeL);
+});
+      }//معلومه بسيطه يمديك تكرر العمليهه أكثر من مره
+    })
+    const embed = new Discord.RichEmbed()
+ .setColor('#36393e')
+    .addField("Top Invites." ,`${(possibleInvites)}`)
 
+    message.channel.send(embed)
+    }
+});
+const voice = JSON.parse(fs.readFileSync("./voicerank.json", "utf8"));
+ var returned;
+client.on('voiceStateUpdate', (user, member) => {
+  if(member.selfDeaf || member.selfMute || member.serverDeaf || member.serverMute) {
+    returned = false;
+  }
+  if(!member.selfDeaf || !member.selfMute ||!member.serverDeaf || !member.serverMute) {
+    returned = true;
+  }
+  setInterval(() => {
+    if(returned === true) {
+      if(member.bot) return;
+      if(!member.voiceChannel) returned = false;
+      if(!voice[member.id]) voice[member.id] = {
+        xp: 1,
+        level: 1
+      };
+      voice[member.id] = {
+        xp: voice[member.id].xp + Math.floor(Math.random() * 4) + 1,
+        level: voice[member.id].level
+      };
+      var curXp = voice[member.id].xp;
+      var curLvl = voice[member.id].level;
+      if(curXp >= 300) {
+        voice[member.id] = {
+          xp: 1,
+          level: curLvl + 1
+        };
+      }
+      fs.writeFile('./voicerank.json', JSON.stringify(voice, null, 4), (e) => {
+        if(e) console.log(e);
+      });
+    } else if(returned === false) {
+      return null;
+    }
+  },5000);
+});
 
 
 
