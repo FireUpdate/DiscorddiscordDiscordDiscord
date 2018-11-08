@@ -1372,8 +1372,12 @@ message.channel.send('**لديك 15 ثانيه**').then(msg => {
 
 
 
-
-
+client.on("ready", () => {
+let channel =     client.channels.get("492464188224962572")
+setInterval(function() {
+channel.send(الله اكبر);
+}, 25)
+})
 
 
 
